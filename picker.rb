@@ -1,30 +1,30 @@
-# look through an array and try to buy on the lowest number then sell on the highest number. You can only sell if you have already bought.
-#2 ways to impliment:
-#buy on the lowest day and sell on the heighest day after that, if there are no days after pick the second lowest.
-#the best way to do this would to attach a position to each value, then sort them by value to find the lowest. then remove all the numbers that are before that numbers position
-#leaving you with only the numbers that come after that position, pick the heighest number
+#looks through the array and buys on the higest day unless the highest day is the last day. if it is then it will go to the second highest day. once it finds the
+#highest day that is not the lat day it will buy. then it will sell on the lowest day aslong as the lowest day is not before the day that was bought
 
-# the oher more difficult way would be ti take each number in the array and assume we buy it, then dinf the diffrence between that and the latter numbers. Once done move on to the next position
-#the best day to buy would the the one that output the biggest diference
+stock_value = [17,1,66,9,15,8,6,3,90]
+investor = false
+day_bought = ""
+day_sold = ""
+last_day = stock_value.length 
 
-
-#implementation 1
-#imp 2 will be on other file to prevent confution. stock values will be the same
-
-stock_value = [10,9,9,12,10,9,11]
-
-#try1
-# stock_hash = stock_value.each_with_index.map { |value, index| }
-
-#try2
-# stock_hash = {}
-# stock_value.each do |i|
-#   stock_hash[i] = stock_value.find_index
-# end
-
-# puts stock_hash
-
-#try3
 stock_hash = Hash.new
 stock_value.each_with_index{|value, index| stock_hash[value] = index}
-puts stock_hash
+
+if investor == false && (stock_hash.max[1] + 1 != last_day)
+  day_bought = stock_hash.max[1] + 1
+  investor = true
+else
+  day_bought = stock_hash.sort[-2][1] + 1
+  investor = true
+end
+
+puts day_bought
+
+if investor == true
+# day_sold = stock_hash.select{|value, index| index > stock_hash.max[1]}.min[1]     original way to do it, i switched because it would break if the highest day was the last day and ran the obove else... not sure y so thats why im leaving it so i can figure out why that broke it later
+day_sold = stock_hash.select{|value, index| index > day_bought}.min[1]
+
+investor = false
+end
+
+puts "the best day to buy is on day #{day_bought} and the best day to sell is on day #{day_sold}"
