@@ -18,8 +18,6 @@ else
   investor = true
 end
 
-puts day_bought
-
 if investor == true
 # day_sold = stock_hash.select{|value, index| index > stock_hash.max[1]}.min[1]     original way to do it, i switched because it would break if the highest day was the last day and ran the obove else... not sure y so thats why im leaving it so i can figure out why that broke it later
 day_sold = stock_hash.select{|value, index| index > day_bought}.min[1]
